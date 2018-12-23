@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>
+		<h2>2.分解自然数</h2>
+		<ol>
+			<li>根据等差数列求和公式计算，公差是1</li>
+			<li>首项a1的值一定不超过和的一半</li>
+			<li>项数n一定不超过和的一半</li>
+			<li>求和公式sum=n(2a1+n-1)/2</li>
+			<li>循环计算</li>
+			<li>如果和大于给出的数字，则跳出内循环，改变首项</li>
+		</ol>
+		<p>结果见控制台</p>
+	</div>
+</body>
+<script>
+	function resolve(n){
+		result = [];
+		var max = Math.ceil(n/2)
+		for(var i = 1; i < max; i++){
+			for(var j = 2; j < max; j++){
+				var sum = j * (2 * i + j - 1) / 2;
+				if (sum === n) {
+					result.push({
+						a1: i,
+						n: j
+					});
+				} else if (sum > n) {
+					break;
+				}
+			}
+		}
+		if (result.length) {
+			var str = ''
+			for (var i = 0; i < result.length; i++){
+				var a1 = result[i].a1;
+				var n = result[i].n;
+				for(var j = 0; j < n; j++){
+					str += (a1 + j) + ' '
+				}
+				str += '\n';
+			}
+			console.log(str);
+			return result;
+		} else {
+			console.log('none');
+			return null;
+		}
+	}
+
+
+	resolve(15);
+</script>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>
+		<h2>1.找出第二长度的公共单词</h2>
+		<ol>
+			<li>找到s，t字符串中包含单词数最少的字符串</li>
+			<li>不妨设s是单词数最少的</li>
+			<li>用s中的单词，逐一在t中检测，结果存在一个数组中，数组包含2个值</li>
+			<li>数组元素根据单词长度由大到小排列</li>
+			<li>如果新单词长度比数组中最大的大，则插入进来</li>
+			<li>如果新单词长度比数组中最小的小，则丢弃</li>
+			<li>如果新单词和数组中任意一个长度相等，根据先后设定，则丢弃</li>
+			<li>最后结果数组必须有2个元素，且不能相等</li>
+		</ol>
+		<p>结果见控制台</p>
+	</div>
+</body>
+<script>
+	function getCommonWord(s, t) {
+		var arr_s = s.split(' ');
+		var arr_t = t.split(' ');
+		var result = [];// 由大到小排列
+
+		if (arr_s.length > arr_t.length) {
+			return getCommonWord(t, s);
+		}
+
+		for(var i = 0; i < arr_s.length; i++){
+			if (arr_t.indexOf(arr_s[i]) > -1) {
+				// 存在匹配单词
+				var sLength = arr_s[i].length;
+				switch(result.length){
+					case 0: 
+						result.push(arr_s[i]);
+						break;
+					case 1:
+						if (result[0].length < sLength) {
+							result.unshift(arr_s[i]);
+						} else if (result[0].length == sLength) {
+							
+						} else {
+							result.push(arr_s[i]);
+						}
+						break;
+					case 2:
+						if (result[0].length < sLength) {
+							result.unshift(arr_s[i]);
+							result.pop();
+						} else if (result[1].length > sLength) {
+							//
+						} else if(result[0].length == sLength || result[1].length == sLength){
+							// 这里如果第一长的公共单词有2个，则依然不符合条件
+						} else {
+							result[1] = arr_s[i];
+						}
+						break;
+					default: console.log('error!');break;
+				}
+			}
+		}
+
+		if (result.length == 2) {
+			return result[1];
+		} else {
+			return null;
+		}
+	}
+
+// Test
+	var word1 = getCommonWord("This is C programming text", "This is a text for C programming");
+	console.log(word1);// This
+	var word2 = getCommonWord("That is C programming text", "This is a text for C programming");
+	console.log(word2);// text
+	var word3 = getCommonWord("That is C programming text", "a programming");
+	console.log(word3);// null
+
+</script>
+</html>
